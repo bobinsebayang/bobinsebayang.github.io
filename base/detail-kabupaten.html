@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Detail Kabupaten</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  
+  
+  <style>
+        /* CSS untuk tampilan utama */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* CSS untuk container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        /* CSS untuk navbar */
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+        
+        /* CSS untuk sidebar dan konten */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+        }
+        
+        .sidebar {
+            background-color: #f1f1f1;
+            width: 200px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        /* CSS untuk peta */
+        #map {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+ <!-- Container -->
+ <div class="container">
+        <!-- Navbar -->
+        <div class="navbar">
+            <h2><div id="navbar-title"></div></h2>
+        </div>
+        
+        <!-- Konten Utama -->
+        <div class="content-wrapper">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <a href="dashboard.html"><h3>Kembali</h3></a>
+                <h3>Sidebar</h3>
+                <ul>
+                    <li>Menu 1</li>
+                    <li>Menu 2</li>
+                    <li>Menu 3</li>
+                </ul>
+            </div>
+            
+            <!-- Konten Utama -->
+            <div class="content">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([-2.5489, 118.0149], 5); // Koordinat tengah Indonesia dan zoom level
+
+    // Tambahkan peta dari Leaflet Providers
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+    }).addTo(map);
+
+    // Mendapatkan nilai parameter 'kotakab' dari URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var kotakabNama = urlParams.get('kotakab');
+
+    // Menggunakan fetch API untuk mengambil data geojson kecamatan dari file
+    fetch('kecamatan.geojson')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Cari semua kecamatan dengan nama yang sesuai dengan kotakab
+        var kecamatanLayers = data.features.filter(function(feature) {
+          return feature.properties.KAB_KOTA === kotakabNama;
+        });
+
+        // Jika ada kecamatan yang ditemukan, tampilkan di peta
+        if (kecamatanLayers.length > 0) {
+          var bounds = L.latLngBounds(); // Membuat variabel untuk menampung batas
+
+          kecamatanLayers.forEach(function(kecamatan) {
+            var kecamatanNama = kecamatan.properties.KECAMATAN; // Ambil nama kecamatan
+
+            var kecamatanLayer = L.geoJSON(kecamatan, {
+              style: function(feature) {
+                  return {
+                      fillColor: '#3388ff', // menggunakan nilai warna dari atribut geojson
+                      weight: 2,
+                      opacity: 1,
+                      color: 'white',
+                      fillOpacity: 0.6
+                  };
+              }
+            }).addTo(map);
+
+            // Tambahkan label nama kecamatan
+            kecamatanLayer.bindTooltip(kecamatanNama, { permanent: true, direction: 'center', className: 'label-kecamatan' });
+
+            // Tambahkan batas kecamatan ke variabel bounds
+            bounds.extend(kecamatanLayer.getBounds());
+          });
+
+          // Set tampilan peta agar mencakup semua kecamatan
+          map.fitBounds(bounds);
+        } else {
+          // Jika kecamatan tidak ditemukan, tampilkan pesan error
+          alert('Kecamatan tidak ditemukan!');
+        }
+      });
+  </script>
+</body>
+</html>

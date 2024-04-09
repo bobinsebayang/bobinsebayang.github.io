@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+        /* CSS untuk tampilan utama */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* CSS untuk container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        /* CSS untuk navbar */
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+        
+        /* CSS untuk sidebar dan konten */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+        }
+        
+        .sidebar {
+            background-color: #f1f1f1;
+            width: 200px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        /* CSS untuk peta */
+        #map {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+  
+<!-- Container -->
+  <div class="container">
+    <!-- Navbar -->
+    <div class="navbar">
+      <h2>Peta Indonesia</h2>
+    </div>
+
+    <div class="content-wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h3>Sidebar</h3>
+        <ul>
+          <li>Menu 1</li>
+          <li>Menu 2</li>
+          <li>Menu 3</li>
+        </ul>
+      </div>
+      
+      <!-- Konten Utama -->
+      <div class="content">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([-2.5489, 118.0149], 5); // Koordinat tengah Indonesia dan zoom level
+
+    // Tambahkan peta dari Leaflet Providers
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+    }).addTo(map);
+
+    // Mendefinisikan style untuk polygon provinsi
+    var provinsiStyle = {
+      fillColor: '#3388ff',
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      fillOpacity: 0.6
+    };
+
+    // Mendefinisikan fungsi untuk mengklik polygon provinsi
+    function onProvinsiClick(e) {
+      var provinsi = e.target;
+      var provinsiNama = provinsi.feature.properties.PROVINSI;
+      window.location.href = 'detail.html?provinsi=' + encodeURIComponent(provinsiNama);
+    }
+
+    // Mendefinisikan fungsi untuk menambahkan label ke setiap layer provinsi
+    function addProvinsiLabel(feature, layer) {
+      var provinsiNama = feature.properties.PROVINSI;
+      var label = L.marker(layer.getBounds().getCenter(), {
+        opacity: 0,
+        interactive: false
+      }).bindTooltip(provinsiNama, {
+        permanent: true,
+        direction: 'center',
+        className: 'provinsi-label'
+      }).addTo(map);
+    }
+
+    // Menggunakan fetch API untuk mengambil data geojson provinsi dari file
+    fetch('provinsi.geojson')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Menambahkan layer polygon provinsi ke peta
+        var provinsiLayer = L.geoJSON(data, {
+          style: provinsiStyle,
+          onEachFeature: function(feature, layer) {
+            layer.on({
+              click: onProvinsiClick
+            });
+            addProvinsiLabel(feature, layer);
+          }
+        }).addTo(map);
+      });
+  </script>
+</body>
+</html>
