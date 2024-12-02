@@ -1,0 +1,80 @@
+/* Reset and Global Styles */
+body, h1 {
+    font-family: "Raleway", sans-serif;
+    margin: 0;
+    overflow: hidden; /* Disable scrollbar */
+}
+
+.section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    position: relative;
+}
+
+.bgimg {
+    background-image: url('assets/img/bg.jpg');
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+}
+
+.bgimg .content {
+    text-align: center;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.social-icons a {
+    color: #fff;
+    margin-right: 10px;
+    font-size: 1.5em;
+}
+
+.social-icons a:hover {
+    color: #ddd;
+}
+
+/* Projects Section */
+.projects {
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: center;
+}
+
+.project-item {
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    text-align: left;
+}
+
+.project-item h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.footer a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 1.5em;
+}
+
+.footer a:hover {
+    color: #ddd;
+}
