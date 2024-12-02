@@ -26,13 +26,66 @@
             scroll-snap-align: start; /* Snap each section on scroll */
             position: relative;
         }
+        .section2 {
+            height: 100vh; /* Full viewport height for each section */
+            display: flex;
+            align-items: center;
+            padding-left: 10%;
+            justify-content: left;
+            scroll-snap-align: start; /* Snap each section on scroll */
+            position: relative;
+        }
         .bgimg {
             background-image: url('assets/img/bg.jpg');
             background-position: center;
             background-size: cover;
             color: #fff;
+            position: relative; /* Memastikan pseudo-element diposisikan relatif ke elemen ini */
+        }
+        .bgimg::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: linear-gradient(to top, rgb(209, 209, 209), rgba(0, 0, 0, 0));
+            pointer-events: none;
+        }
+        .bgimg2 {
+            background-image: url('assets/img/bgimg.jpg');
+            background-position: center;
+            background-size: cover;
+            color: #fff;
+            position: relative; /* Untuk memastikan pseudo-element diposisikan relatif terhadap elemen ini */
+        }
+
+        .bgimg2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 25%; /* Gradasi mencakup 1/4 bagian bawah */
+            background: linear-gradient(to top, white, rgba(255, 255, 255, 0));
+            pointer-events: none; /* Supaya overlay tidak mengganggu interaksi elemen lain */
+        }
+        .content {
+            text-align: center;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            position: relative; /* Membuat elemen ini menjadi container relatif */
         }
         .bgimg .content {
+            text-align: center;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .bgimg2 .content2 {
             text-align: center;
             max-width: 800px;
             background: rgba(0, 0, 0, 0.7);
@@ -51,7 +104,7 @@
         }
         .col-md-6 img {
             width: 100%;
-            max-height: 300px;
+            max-height: 350px;
             object-fit: cover;
             border-radius: 8px;
         }
@@ -74,6 +127,54 @@
         }
         .back-to-top:hover {
             background-color: #000000;
+        }
+        .navigation-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .nav-button {
+            background-color: #008cff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+        .nav-button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        .rounded-button {
+            background-color: #008cff;
+            border-radius: 50%; /* Membuat tombol bulat */
+            width: 50px; /* Lebar tombol */
+            height: 50px; /* Tinggi tombol */
+            text-align: center; /* Teks di tengah */
+            display: inline-flex; /* Membantu untuk perataan teks */
+            align-items: center; /* Posisikan teks secara vertikal */
+            justify-content: center; /* Posisikan teks secara horizontal */
+            font-size: 20px; /* Ukuran teks */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Bayangan tombol */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Animasi */
+            position: absolute; /* Posisi tombol absolut terhadap .content */
+            bottom: -25px; /* Jarak dari bagian bawah content */
+            left: 50%; /* Posisi horizontal di tengah */
+            transform: translateX(-50%); /* Koreksi untuk memusatkan tombol secara horizontal */
+        }
+        .rounded-button:hover {
+            background-color: #fff; /* Warna saat di-hover */
+            transform: translate(-50%, 5px) scale(1.1); /* Sedikit memperbesar dan memindahkan tombol ke bawah */
+            color: #000000;
         }
         .social-icons {
             display: flex;
@@ -100,6 +201,48 @@
             text-align: justify; /* Pastikan setiap item juga diatur */
             margin-bottom: 10px; /* Opsional, untuk memberi jarak antar elemen */
         }
+        .button-6 { 
+            align-items: center; 
+            background-color: #FFFFFF; 
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+            border-radius: .25rem; 
+            box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0; 
+            box-sizing: border-box; 
+            color: rgba(0, 0, 0, 0.85); 
+            cursor: pointer; 
+            display: inline-flex; 
+            font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif; 
+            font-size: 16px; 
+            font-weight: 600; 
+            justify-content: center; 
+            line-height: 1.25; 
+            margin: 0; 
+            min-height: 3rem; 
+            padding: calc(.875rem - 1px) calc(1.5rem - 1px); 
+            position: relative; 
+            text-decoration: none; 
+            transition: all 250ms; 
+            user-select: none; 
+            -webkit-user-select: none; 
+            touch-action: manipulation; 
+            vertical-align: baseline; 
+            width: auto; 
+        } 
+        .button-6:hover, .button-6:focus { 
+                border-color: rgba(0, 0, 0, 0.15); 
+                box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px; 
+                color: rgba(0, 0, 0, 0.65); 
+        } 
+        .button-6:hover { 
+            transform: translateY(-5px); 
+        } 
+        .button-6:active { 
+            background-color: #F0F0F1; 
+            border-color: rgba(0, 0, 0, 0.15); 
+            box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px; 
+            color: rgba(0, 0, 0, 0.65); 
+            transform: translateY(0); 
+        }
     </style>
 </head>
 <body>
@@ -119,14 +262,36 @@
                 <i class="fab fa-whatsapp"></i>
             </a>
         </div>
-        <p class="lead mt-3">About Me:</p>
+        <p class="lead mt-3">More About Me</p>
+        <p class="lead" style="text-align: justify;"></p>
+        <!-- <button onclick="scrollToSection('projects')" class="btn btn-info">About Me</button> -->
+        <button onclick="scrollToSection('personal')" class="btn btn-info rounded-button">⬇</button>
+    </div>
+</div>
+<!-- Personal Information -->
+<div id="personal" class="section2 bgimg2">
+    <div class="content2">
+        <h1 class="display-4">Bobin Anugerah Sebayang</h1>
+        <!-- <div class="social-icons mt-3">
+            <a href="https://www.linkedin.com/in/bobinsebayang" target="_blank" class="social-icon" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="mailto:sebayangbobin@gmail.com" class="social-icon" title="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://wa.me/6281314664960?text=Hello%20there!" target="_blank" class="social-icon" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div> -->
+        <!-- <p class="lead mt-3">About Me:</p> -->
         <p class="lead" style="text-align: justify;">GIS enthusiast with a passion for drone-based remote sensing and spatial data analysis. Experienced in mapping agricultural landscapes, including work in the palm oil, sugarcane, and horticulture sectors. Proficient in applying machine learning techniques to enhance data-driven insights and deliver meaningful results.</p>
-        <button onclick="scrollToSection('projects')" class="btn btn-info">More</button>
-        <!-- <button onclick="scrollToSection('works')" class="btn btn-info">My Works</button> -->
+        <button onclick="scrollToSection('projects')" class="button-6">Professional Experience</button>
+        <button onclick="scrollToSection('works')" class="button-6">See Previous Work ⬇</button>
+        
     </div>
 </div>
 
-<!-- Section Projects -->
+<!-- Portopholio Projects -->
 <div id="projects">
     <!-- Project 1 -->
     <div class="section">
@@ -248,37 +413,83 @@
     </div>
 </div>
 
-<!-- Tombol Kembali -->
-<button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+
+<!-- Tombol Navigasi -->
+<div class="navigation-buttons">
+    <button class="nav-button" onclick="scrollToTop()">🏠︎</button>
+    <button class="nav-button" onclick="scrollToPrevious()">⬆</button>
+    <button class="nav-button" onclick="scrollToNext()">⬇</button>
+</div>
 
 <!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
-    function scrollToSection(id) {
-        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    };
+    // Ambil semua elemen section
+    const sections = document.querySelectorAll('.section, .section2');
+    let currentIndex = 0; // Indeks section saat ini
 
+    // Fungsi untuk scroll ke section berdasarkan indeks
+    function scrollToSectionByIndex(index) {
+        if (index >= 0 && index < sections.length) {
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+            currentIndex = index; // Update indeks section
+        }
+    }
+
+    // Fungsi untuk scroll ke section sebelumnya
+    function scrollToPrevious() {
+        if (currentIndex > 0) {
+            scrollToSectionByIndex(currentIndex - 1);
+        }
+    }
+
+    // Fungsi untuk scroll ke section berikutnya
+    function scrollToNext() {
+        if (currentIndex < sections.length - 1) {
+            scrollToSectionByIndex(currentIndex + 1);
+        }
+    }
+
+    // Fungsi untuk kembali ke section paling atas
     function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+        scrollToSectionByIndex(0);
+    }
+
+    // Fungsi untuk scroll ke section berdasarkan ID
+    function scrollToSection(id) {
+        const targetSection = document.getElementById(id);
+        if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+            currentIndex = Array.from(sections).indexOf(targetSection); // Update indeks jika ID cocok
+        }
+    }
+
+    // Inisialisasi carousel saat dokumen siap
     $(document).ready(function () {
         $('.carousel').carousel();
     });
 
-    window.addEventListener('scroll', () => {
-        const backToTopButton = document.querySelector('.back-to-top');
-        backToTopButton.style.display = window.scrollY > window.innerHeight ? 'block' : 'none';
-    });
-
+    // Tambahkan event listener untuk menangani scroll dengan wheel per section
     window.addEventListener('wheel', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Cegah perilaku default scroll
         if (e.deltaY > 0) {
-            window.scrollBy({ top: window.innerHeight, left: 0, behavior: 'smooth' });
+            scrollToNext(); // Scroll ke section berikutnya
         } else {
-            window.scrollBy({ top: -window.innerHeight, left: 0, behavior: 'smooth' });
+            scrollToPrevious(); // Scroll ke section sebelumnya
         }
     }, { passive: false });
+
+    // Event listener untuk menampilkan tombol "back-to-top" secara dinamis
+    window.addEventListener('scroll', () => {
+        const backToTopButton = document.querySelector('.back-to-top');
+        if (backToTopButton) {
+            backToTopButton.style.display = window.scrollY > window.innerHeight ? 'block' : 'none';
+        }
+    });
 </script>
+
+
 </body>
 </html>
