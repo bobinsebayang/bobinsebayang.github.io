@@ -474,21 +474,25 @@
     // Tambahkan event listener untuk menangani scroll dengan wheel per section
     window.addEventListener('wheel', (e) => {
         e.preventDefault(); // Cegah perilaku default scroll
+        const newIndex = Math.round(window.scrollY / window.innerHeight); // Hitung indeks berdasarkan posisi scroll
         if (e.deltaY > 0) {
+            if (newIndex !== currentIndex) currentIndex = newIndex; // Update indeks jika posisi scroll berubah
             scrollToNext(); // Scroll ke section berikutnya
         } else {
+            if (newIndex !== currentIndex) currentIndex = newIndex; // Update indeks jika posisi scroll berubah
             scrollToPrevious(); // Scroll ke section sebelumnya
         }
     }, { passive: false });
 
-    // Event listener untuk menampilkan tombol "back-to-top" secara dinamis
+    // Event listener untuk memperbarui indeks saat scrolling manual
     window.addEventListener('scroll', () => {
-        const backToTopButton = document.querySelector('.back-to-top');
-        if (backToTopButton) {
-            backToTopButton.style.display = window.scrollY > window.innerHeight ? 'block' : 'none';
+        const newIndex = Math.round(window.scrollY / window.innerHeight); // Hitung indeks berdasarkan posisi scroll
+        if (newIndex !== currentIndex) {
+            currentIndex = newIndex; // Perbarui currentIndex agar sesuai dengan posisi scroll
         }
     });
 </script>
+
 
 
 </body>
